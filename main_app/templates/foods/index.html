@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="GET" action="{% url 'search_food' %}">
+  <input type="text" name="ingr" placeholder="Enter your food">
+  <button type="submit">Search Food</button>
+</form>
+
+{% if search_results %}
+    <h2>Search Results For {{ ingr }}: Total {{ search_results.total }}</h2>
+    {% for result in search_results %}
+        <h3>{{ result.food.label }}</h3>
+        <h5>Nutrients:</h5>
+        <p>Calories: {{ result.food.nutrients.ENERC_KCAL | floatformat:0 }}</p>
+        <p>Protein: {{ result.food.nutrients.PROCNT | floatformat:0 }}</p>
+        <p>Fat: {{ result.food.nutrients.FAT | floatformat:0 }}</p>
+        <p>Carb: {{ result.food.nutrients.CHOCDF | floatformat:0 }}</p>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
