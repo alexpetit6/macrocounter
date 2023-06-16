@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
+from .models import Food, Meal
 import requests
 
 # Create your views here.
@@ -34,6 +37,7 @@ def search_food(request):
       'app_id': 'abb5c5e1',
       'app_key': '03d3763004f76acd1ca92034dce991b0',
       'ingr': ingr,
+      'nutrient-type': 'logging'
     }
     response = requests.get(url, params)
 
@@ -45,3 +49,30 @@ def search_food(request):
     }
 
     return render(request, 'foods/index.html', context)
+
+def confirm_add_food(request, food_id):
+  old_food = Food.objects.get(food_id)
+  if old_food.food_id == food_id:
+    return render('foods/confirm_add_food', {
+      'food': old_food
+    })
+  else: 
+    ingr = food_id
+    url = 'https://api.edamam.com/api/food-database/v2/parser'
+    params = {
+      'app_id': 'abb5c5e1',
+      'app_key': '03d3763004f76acd1ca92034dce991b0',
+      'ingr': ingr,
+      'nutrient-type': 'logging'
+    }
+  response = requests.get(url, params)
+
+  data = response.json()
+  search_results = data['hints']
+  context = {
+    'search_results': search_results,
+    'ingr': ingr
+  }
+
+  return render(request, 'foods/confirm_add_food', context)
+
