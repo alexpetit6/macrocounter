@@ -51,20 +51,20 @@ def search_food(request):
     return render(request, 'foods/index.html', context)
 
 def food_confirm_add(request, food_id):
-  old_food = Food.objects.get(food_id)
-  if old_food.food_id == food_id:
-    return render('foods/food_confirm_add', {
-      'food': old_food
-    })
-  else: 
-    ingr = food_id
-    url = 'https://api.edamam.com/api/food-database/v2/parser'
-    params = {
-      'app_id': 'abb5c5e1',
-      'app_key': '03d3763004f76acd1ca92034dce991b0',
-      'ingr': ingr,
-      'nutrient-type': 'logging'
-    }
+  # old_food = Food.objects.get(food_id)
+  # if old_food.food_id == food_id:
+  #   return render('foods/food_confirm_add', {
+  #     'food': old_food
+  #   })
+  # else: 
+  ingr = food_id
+  url = 'https://api.edamam.com/api/food-database/v2/parser'
+  params = {
+    'app_id': 'abb5c5e1',
+    'app_key': '03d3763004f76acd1ca92034dce991b0',
+    'ingr': ingr,
+    'nutrient-type': 'logging'
+  }
   response = requests.get(url, params)
 
   data = response.json()
@@ -73,6 +73,20 @@ def food_confirm_add(request, food_id):
     'search_results': search_results,
     'ingr': ingr
   }
+  
+  results = search_results[0]
 
-  return render(request, 'foods/food_confirm_add', context)
+  f = Food(
+    name = results['food']['label'],
+    food_id = ingr,
+    protein = results['food']['nutrients']['PROCNT'],
+    carbs = results['food']['nutrients']['CHOCDF'],
+    fat = results['food']['nutrients']['FAT'],
+    calories = results['food']['nutrients']['ENERC_KCAL'],
+    serving = 1,
+  )
+
+  f.save()
+
+  return render(request, 'meals/food_confirm_add.html', context)
 

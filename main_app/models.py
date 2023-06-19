@@ -21,6 +21,5 @@ class Meal(models.Model):
   foods = models.ManyToManyField(Food)
   date = models.DateField()
   user = models.ForeignKey(User, on_delete=models.CASCADE)
-
   def __str__(self):
     return f'{self.name} {self.date} {self.user}'
