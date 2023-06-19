@@ -50,10 +50,10 @@ def search_food(request):
 
     return render(request, 'foods/index.html', context)
 
-def confirm_add_food(request, food_id):
+def food_confirm_add(request, food_id):
   old_food = Food.objects.get(food_id)
   if old_food.food_id == food_id:
-    return render('foods/confirm_add_food', {
+    return render('foods/food_confirm_add', {
       'food': old_food
     })
   else: 
@@ -74,5 +74,5 @@ def confirm_add_food(request, food_id):
     'ingr': ingr
   }
 
-  return render(request, 'foods/confirm_add_food', context)
+  return render(request, 'foods/food_confirm_add', context)
 
