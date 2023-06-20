@@ -4,7 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .models import Food, Meal
-import requests
+import requests 
+import os
 
 # Create your views here.
 def home(request):
@@ -34,8 +35,8 @@ def search_food(request):
     ingr = request.GET.get('ingr', '')
     url = 'https://api.edamam.com/api/food-database/v2/parser'
     params = {
-      'app_id': 'abb5c5e1',
-      'app_key': '03d3763004f76acd1ca92034dce991b0',
+      'app_id': os.environ['API_ID'],
+      'app_key': os.environ['API_KEY'],
       'ingr': ingr,
       'nutrient-type': 'logging'
     }
@@ -50,43 +51,32 @@ def search_food(request):
 
     return render(request, 'foods/index.html', context)
 
-def food_confirm_add(request, food_id):
-  # old_food = Food.objects.get(food_id)
-  # if old_food.food_id == food_id:
-  #   return render('foods/food_confirm_add', {
-  #     'food': old_food
-  #   })
-  # else: 
-  ingr = food_id
-  url = 'https://api.edamam.com/api/food-database/v2/parser'
-  params = {
-    'app_id': 'abb5c5e1',
-    'app_key': '03d3763004f76acd1ca92034dce991b0',
-    'ingr': ingr,
-    'nutrient-type': 'logging'
-  }
-  response = requests.get(url, params)
+def food_details(request, food_id):
+  try:
+    food = Food.objects.get(food_id=food_id)
+  except Food.DoesNotExist:
+    url = 'https://api.edamam.com/api/food-database/v2/parser'
+    ingr = food_id
+    params = {
+      'app_id': os.environ['API_ID'],
+      'app_key': os.environ['API_KEY'],
+      'ingr': ingr,
+      'nutrient-type': 'logging'
+    }
+    response = requests.get(url, params)
+    data = response.json()
+    search_results = data['hints']
 
-  data = response.json()
-  search_results = data['hints']
-  context = {
-    'search_results': search_results,
-    'ingr': ingr
-  }
-  
-  results = search_results[0]
-
-  f = Food(
-    name = results['food']['label'],
-    food_id = ingr,
-    protein = results['food']['nutrients']['PROCNT'],
-    carbs = results['food']['nutrients']['CHOCDF'],
-    fat = results['food']['nutrients']['FAT'],
-    calories = results['food']['nutrients']['ENERC_KCAL'],
-    serving = 1,
-  )
-
-  f.save()
-
-  return render(request, 'meals/food_confirm_add.html', context)
+    results = search_results[0]
+    food = Food.objects.create(
+      name = results['food']['label'],
+      food_id = ingr,
+      protein = results['food']['nutrients']['PROCNT'],
+      carbs = results['food']['nutrients']['CHOCDF'],
+      fat = results['food']['nutrients']['FAT'],
+      calories = results['food']['nutrients']['ENERC_KCAL'],
+      serving = 1,
+    )
+ 
+  return render(request, 'foods/food_details.html', {'food': food})
 
