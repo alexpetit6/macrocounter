@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Add Food To Meal</h1>
+
+<p>{{food}}</p>
+<p>{{search_results.food}}</p>
+
+<h2>{{food.name}}</h2>
+  <div class="card">
+    <div class="card-content">
+        <span class="card-title">{{ food.name }}</span>
+        <h5>Nutrients:</h5>
+        <h6>Based off of 100 grams</h6>
+        <p>Calories: {{ food.calories | floatformat:0 }}</p>
+        <p>Protein: {{ food.protein | floatformat:0 }}</p>
+        <p>Fat: {{ food.fat | floatformat:0 }}</p>
+        <p>Carb: {{ food.carbs | floatformat:0 }}</p>
+        <a href="{% url 'food_details' food.food_id %}">
+          <button>Add Food To A Meal</button>
+        </a>
+    </div>
+  </div>
+
+
+{% endblock %}

@@ -19,8 +19,8 @@
             <p>Protein: {{ result.food.nutrients.PROCNT | floatformat:0 }}</p>
             <p>Fat: {{ result.food.nutrients.FAT | floatformat:0 }}</p>
             <p>Carb: {{ result.food.nutrients.CHOCDF | floatformat:0 }}</p>
-            <a href="{% url 'food_confirm_add' result.food.foodId %}">
-              <button>Add Food To A Meal</button>
+            <a href="{% url 'food_details' result.food.foodId %}">
+              <button>Food Details</button>
             </a>
         </div>
       </div>
