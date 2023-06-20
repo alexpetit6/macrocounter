@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView
 from .models import Food, Meal
 import requests 
 import os
+from datetime import date
 
 # Create your views here.
 def home(request):
@@ -81,4 +82,24 @@ def food_details(request, food_id):
   return render(request, 'foods/food_details.html', {'food': food})
 
 def assoc_food(request, food_id):
-  pass
+  category = request.POST.__getitem__('category')
+  food = Food.objects.get(id=food_id)
+  try: 
+    meal = Meal.objects.get(date=date.today(), user=request.user)
+
+  except Meal.DoesNotExist:
+    meal = Meal.objects.create(
+      date = date.today(),
+      user = request.user
+    )
+
+  if category == 'breakfast':
+    meal.breakfast.add(food_id)
+
+  elif category == 'lunch':
+    meal.lunch.add(food_id)
+
+  elif category == 'dinner':
+    meal.dinner.add(food_id)
+
+  return redirect('food_details', food.food_id)
