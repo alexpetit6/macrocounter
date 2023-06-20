@@ -17,9 +17,10 @@ class Food(models.Model):
     return f'{self.name} {self.food_id}'
     
 class Meal(models.Model):
-  name = models.CharField(max_length=100)
-  foods = models.ManyToManyField(Food)
+  breakfast = models.ManyToManyField(Food, blank=True, related_name='breakfast')
+  lunch = models.ManyToManyField(Food, blank=True, related_name='lunch')
+  dinner = models.ManyToManyField(Food, blank=True, related_name='dinner')
   date = models.DateField()
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   def __str__(self):
-    return f'{self.name} {self.date} {self.user}'
+    return f'{self.date} {self.user}'

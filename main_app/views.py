@@ -80,3 +80,5 @@ def food_details(request, food_id):
  
   return render(request, 'foods/food_details.html', {'food': food})
 
+def assoc_food(request, food_id):
+  pass

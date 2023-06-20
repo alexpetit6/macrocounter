@@ -8,20 +8,29 @@
 <p>{{search_results.food}}</p>
 
 <h2>{{food.name}}</h2>
-  <div class="card">
-    <div class="card-content">
-        <span class="card-title">{{ food.name }}</span>
-        <h5>Nutrients:</h5>
-        <h6>Based off of 100 grams</h6>
-        <p>Calories: {{ food.calories | floatformat:0 }}</p>
-        <p>Protein: {{ food.protein | floatformat:0 }}</p>
-        <p>Fat: {{ food.fat | floatformat:0 }}</p>
-        <p>Carb: {{ food.carbs | floatformat:0 }}</p>
-        <a href="{% url 'food_details' food.food_id %}">
-          <button>Add Food To A Meal</button>
-        </a>
-    </div>
+<div class="card">
+  <div class="card-content">
+      <span class="card-title">{{ food.name }}</span>
+      <h5>Nutrients:</h5>
+      <h6>Based off of 100 grams</h6>
+      <p>Calories: {{ food.calories | floatformat:0 }}</p>
+      <p>Protein: {{ food.protein | floatformat:0 }}</p>
+      <p>Fat: {{ food.fat | floatformat:0 }}</p>
+      <p>Carb: {{ food.carbs | floatformat:0 }}</p>
+      <form action="{% url 'assoc_food' food.id %}", method="POST">
+        <select name="category" id="category">
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+        </select>
+        <button type="submit">Add Food To A Meal</button>
+      </form>
   </div>
+</div>
 
-
+<script>
+  const selectEl = document.getElementById('category');
+  M.FormSelect.init(selectEl);
+</script>
 {% endblock %}
+
