@@ -24,3 +24,8 @@ class Meal(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
   def __str__(self):
     return f'{self.date} {self.user}'
+  
+class MealFood(models.Model):
+  meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+  food = models.ForeignKey(Food, on_delete=models.CASCADE)
+  quantity = models.PositiveIntegerField(default=100)
