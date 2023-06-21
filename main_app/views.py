@@ -84,7 +84,7 @@ def food_details(request, food_id):
 
 def assoc_food(request, food_id):
   category = request.POST.__getitem__('category')
-  quantity = (request.POST.__getitem__('quantity')) / 100
+  quantity = int(request.POST.__getitem__('quantity')) / 100
   food = Food.objects.get(id=food_id)
   try: 
     meal = Meal.objects.get(date=date.today(), user=request.user)
@@ -104,7 +104,11 @@ def assoc_food(request, food_id):
   elif category == 'dinner':
     meal.dinner.add(food_id)
 
-  meal
+  meal.calories += food.calories * quantity
+  meal.protein += food.protein * quantity
+  meal.carbs += food.carbs * quantity
+  meal.fat += food.fat * quantity
+  meal.save()
 
   return redirect('food_details', food.food_id)
 
