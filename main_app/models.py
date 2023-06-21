@@ -32,4 +32,5 @@ class Meal(models.Model):
 class MealFood(models.Model):
   meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
   food = models.ForeignKey(Food, on_delete=models.CASCADE)
-  quantity = models.PositiveIntegerField(default=0) 
+  quantity = models.PositiveIntegerField(default=0)
+  category = models.CharField(max_length=100)
