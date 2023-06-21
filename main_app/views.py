@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from django.db.models import get_or_create
+# from django.db.models import get_or_create
 from .models import Food, Meal
 import requests 
 import os
