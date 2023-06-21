@@ -132,9 +132,9 @@ def assoc_food(request, food_id):
   meal_food.save()
   return redirect('food_details', food.food_id)
 
-def unassoc_food(request, food_id, meal_id):
-  meal = Meal.objects.get(id=meal_id)
-  food = meal.breakfast.get(food_id=food_id)
-  meal_food = MealFood.objects.get(meal=meal, food=food)
-  quantity = meal_food.quantity
-  meal.calories -= food.calories * quantity
+# def unassoc_food(request, food_id, meal_id):
+#   meal = Meal.objects.get(id=meal_id)
+#   food = meal.breakfast.get(food_id=food_id)
+#   meal_food = MealFood.objects.get(meal=meal, food=food)
+#   quantity = meal_food.quantity
+#   meal.calories -= food.calories * quantity
