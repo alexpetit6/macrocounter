@@ -124,10 +124,10 @@ def assoc_food(request, food_id):
   # meal_food, create = MealFood.objects.get_or_create(meal = meal.id, food = food_id)
   # meal_food.quantity = quantity
   try: 
-    meal_food = MealFood.objects.get(meal = meal, food = food)
+    meal_food = MealFood.objects.get(meal = meal, food = food, category = category)
 
   except MealFood.DoesNotExist:
-    meal_food = MealFood.objects.create(meal = meal, food = food)
+    meal_food = MealFood.objects.create(meal = meal, food = food, category = category)
   meal_food.quantity += quantity
   meal_food.save()
   return redirect('food_details', food.food_id)
