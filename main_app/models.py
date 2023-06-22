@@ -3,6 +3,13 @@ from datetime import date
 from django.contrib.auth.models import User
 # Create your models here.
 
+class Profile(models.Model):
+  user = models.OneToOneField(User, on_delete=models.CASCADE)
+  calorie_goal = models.IntegerField(default=0)
+  protein_goal = models.IntegerField(default=0)
+  carbs_goal = models.IntegerField(default=0)
+  fat_goal = models.IntegerField(default=0)
+
 class Food(models.Model):
   name = models.CharField(max_length=100)
   food_id = models.CharField(max_length=500)
