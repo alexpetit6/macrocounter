@@ -4,10 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
 class CustomUserCreationForm(UserCreationForm):
-  calorie_goal = forms.IntegerField()
-  protein_goal = forms.IntegerField()
-  carbs_goal = forms.IntegerField()
-  fat_goal = forms.IntegerField()
+  calorie_goal = forms.IntegerField(label='Calorie goal is calculated by macros do NOT try to edit calorie goal', widget=forms.NumberInput(attrs={'id': 'daily_calories', 'readonly': True}))
+  protein_goal = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'daily_protein'}))
+  carbs_goal = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'daily_carbs'}))
+  fat_goal = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'daily_fat'}))
 
   class Meta(UserCreationForm.Meta):
     model = User

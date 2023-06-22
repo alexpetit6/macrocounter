@@ -11,8 +11,8 @@ class Profile(models.Model):
   carbs_goal = models.IntegerField(default=0)
   fat_goal = models.IntegerField(default=0)
 
-  def calculate_calorie_goal(self):
-    
+  # def calculate_calorie_goal(self):
+  #   calorie_goal = (self.protein_goal * 4) + (self.protein_carbs * 4) + (self.protein_goal * 4)
 
   def get_absolute_url(self):
     return reverse('profile_page')
