@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Profile Page</h1>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">{{ user.username }}</span>
+    <h5>Daily Goals:</h5>
+    <p>Calories: {{ profile.calorie_goal }}</p>
+    <p>Protein: {{ profile.protein_goal }}</p>
+    <p>Carbs: {{ profile.carbs_goal }}</p>
+    <p>Fat: {{ profile.fat_goal }}</p>
+  </div>
+</div>
+
+{% endblock %}

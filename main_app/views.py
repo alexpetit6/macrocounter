@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 # from django.db.models import get_or_create
-from .models import Food, Meal, MealFood
+from .models import Food, Meal, MealFood, Profile
 import requests 
 import os
 from datetime import date
@@ -113,19 +113,6 @@ def assoc_food(request, food_id):
   meal.carbs += food.carbs * (quantity / 100) 
   meal.fat += food.fat * (quantity / 100)
   meal.save()
-  # last = meal.breakfast.last()
-  # last.calories = food.calories * quantity
-  # print(last.calories, last.name, "line 117")
-  # last.protein = food.protein * quantity
-  # last.carbs = food.carbs * quantity
-  # last.fat = food.fat * quantity
-  # meal.save()
-  # print(last.calories, last.name, "line 124")
-  # print(last.name, last.calories, last.protein, "line 125")
-  # for food in meal.breakfast.all():
-  #   print(food.name, food.calories, food.protein, "for loop")
-  # meal_food, create = MealFood.objects.get_or_create(meal = meal.id, food = food_id)
-  # meal_food.quantity = quantity
   try: 
     meal_food = MealFood.objects.get(meal = meal, food = food, category = category)
 
@@ -169,3 +156,9 @@ def meal_detail(request):
   lunch = meal.calculate_nutrients()[1]
   dinner = meal.calculate_nutrients()[2]
   return render(request, 'meals/meal_detail.html', {'breakfast': breakfast, 'lunch': lunch, 'dinner': dinner, 'meal':meal})
+
+def profile_page(request):
+  user = request.user
+  profile = Profile.objects.get(user=user)
+  return render(request, 'profiles/profile_page.html', {'user': user, 'profile': profile})
+  
