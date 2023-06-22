@@ -89,12 +89,13 @@ def assoc_food(request, food_id):
   category = request.POST.__getitem__('category')
   quantity = int(request.POST.__getitem__('quantity')) 
   food = Food.objects.get(id=food_id)
+  selectedDate = request.POST.__getitem__('date')
   try: 
-    meal = Meal.objects.get(date=date.today(), user=request.user)
+    meal = Meal.objects.get(date=selectedDate, user=request.user)
 
   except Meal.DoesNotExist:
     meal = Meal.objects.create(
-      date = date.today(),
+      date = selectedDate,
       user = request.user
     )
 
@@ -144,12 +145,12 @@ def unassoc_food(request, meal_id, food_id, category):
   return redirect(redirect_url)
 
 def meal_detail(request):
-  date = request.GET.get('date', '')
+  selected_date = request.GET.get('date', '')
   try: 
-    meal = Meal.objects.get(date=date, user=request.user)
+    meal = Meal.objects.get(date=selected_date, user=request.user)
   except Meal.DoesNotExist:
     meal = Meal.objects.create(
-      date = date,
+      date = selected_date,
       user = request.user
     )
   breakfast = meal.calculate_nutrients()[0]
