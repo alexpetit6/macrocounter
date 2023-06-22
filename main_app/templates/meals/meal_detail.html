@@ -8,7 +8,18 @@
   <input type="date" name="date" value='{{ selected_date }}'>
   <button type="submit">change date</button>
 </form>
-<h1>Total Calories and Macros</h1>
+
+<h1>Calories and Macros Remaining: </h1>
+<div class="card">
+  <div class="card-content">
+    <p>Calories: {{ remaining.calories }}</p>
+    <p>Protein: {{ remaining.protein }}</p>
+    <p>Fat: {{ remaining.fat }}</p>
+    <p>Carbs: {{ remaining.carbs }}</p>
+  </div>
+</div>
+
+<h1>Total Calories and Macros: </h1>
 <div class="card">
   <div class="card-content">
     <p>Calories: {{ meal.calories }}</p>

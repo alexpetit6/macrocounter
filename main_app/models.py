@@ -11,6 +11,9 @@ class Profile(models.Model):
   carbs_goal = models.IntegerField(default=0)
   fat_goal = models.IntegerField(default=0)
 
+  def calculate_calorie_goal(self):
+    
+
   def get_absolute_url(self):
     return reverse('profile_page')
 
@@ -100,6 +103,21 @@ class Meal(models.Model):
 
     return [breakfast, lunch, dinner]
     print(self.food_items)
+  
+  def calculate_remaining_nutrients(self):
+    user = User.objects.get(id=self.user.id)
+    profile = Profile.objects.get(user=user)
+    remaining_calories = profile.calorie_goal - self.calories
+    remaining_protein = profile.protein_goal - self.protein
+    remaining_carbs = profile.carbs_goal - self.carbs
+    remaining_fat =  profile.fat_goal - self.fat
+
+    return {
+      'calories': remaining_calories,
+      'protein': remaining_protein,
+      'carbs': remaining_carbs,
+      'fat': remaining_fat,
+    }
 
 class MealFood(models.Model):
   meal = models.ForeignKey(Meal, on_delete=models.CASCADE, related_name='food_items' )

@@ -156,7 +156,8 @@ def meal_detail(request):
   breakfast = meal.calculate_nutrients()[0]
   lunch = meal.calculate_nutrients()[1]
   dinner = meal.calculate_nutrients()[2]
-  return render(request, 'meals/meal_detail.html', {'breakfast': breakfast, 'lunch': lunch, 'dinner': dinner, 'meal':meal})
+  remaining = meal.calculate_remaining_nutrients()
+  return render(request, 'meals/meal_detail.html', {'breakfast': breakfast, 'lunch': lunch, 'dinner': dinner, 'meal':meal, 'remaining': remaining})
 
 def profile_page(request):
   user = request.user
