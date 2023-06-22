@@ -6,33 +6,54 @@
 
 <form method="POST" action="">
   {% csrf_token %}
-  {{ form.as_p }}
+  <p>
+    <label for="id_calorie_goal" class="active">Calorie goal:</label>
+    <input type="number" name="calorie_goal" value="{{ form.calorie_goal.value }}" required="" id="id_calorie_goal" readonly>
+  </p>
+  <p>
+    <label for="id_protein_goal" class="active">Protein goal:</label>
+    <input type="number" name="protein_goal" value="{{ form.protein_goal.value }}" required="" id="id_protein_goal">
+  </p>
+  <p>
+    <label for="id_carbs_goal" class="active">Carbs goal:</label>
+    <input type="number" name="carbs_goal" value="{{ form.carbs_goal.value }}" required="" id="id_carbs_goal">
+  </p>
+  <p>
+    <label for="id_fat_goal" class="active">Fat goal:</label>
+    <input type="number" name="fat_goal" value="{{ form.fat_goal.value }}" required="" id="id_fat_goal">
+  </p>
   <button type="submit" class="btn">Submit Changes</button>
 </form>
 
 <script>
   document.addEventListener('DOMContentLoaded', function(){
-     var calories = document.getElementById('daily_calories'); 
-     var protein = document.getElementById('daily_protein');
-     var carbs = document.getElementById('daily_carbs');
-     var fat = document.getElementById('daily_fat');
-     var caloriesGoal = 0
-     var proteinGoal = 0
-     var carbsGoal = 0
-     var fatGoal = 0
+     var calories = document.getElementById('id_calorie_goal'); 
+     var protein = document.getElementById('id_protein_goal');
+     var carbs = document.getElementById('id_carbs_goal');
+     var fat = document.getElementById('id_fat_goal');
+     var caloriesGoal = parseInt(calories.value)
+    //  var proteinGoal = parseInt(protein.value)
+    //  var carbsGoal = parseInt(carbs.value)
+    //  var fatGoal = parseInt(fat.value)
      protein.addEventListener('input', function(){
-      proteinGoal = protein.value * 4;
-      caloriesGoal = proteinGoal + carbsGoal + fatGoal;
+      var proteinGoal = parseInt(protein.value * 4)
+      var carbsGoal = parseInt(carbs.value * 4)
+      var fatGoal = parseInt(fat.value * 9)
+      caloriesGoal = parseInt(proteinGoal + carbsGoal + fatGoal);
       calories.value = caloriesGoal
      })
      carbs.addEventListener('input', function(){
-      carbsGoal = carbs.value * 4;
-      caloriesGoal = proteinGoal + carbsGoal + fatGoal
+      var proteinGoal = parseInt(protein.value * 4)
+      var carbsGoal = parseInt(carbs.value * 4)
+      var fatGoal = parseInt(fat.value * 9)
+      caloriesGoal = parseInt(proteinGoal + carbsGoal + fatGoal)
       calories.value = caloriesGoal
      })
      fat.addEventListener('input', function(){
-      fatGoal = fat.value * 9;
-      caloriesGoal = proteinGoal + carbsGoal + fatGoal
+      var proteinGoal = parseInt(protein.value * 4)
+      var carbsGoal = parseInt(carbs.value * 4)
+      var fatGoal = parseInt(fat.value * 9)
+      caloriesGoal = parseInt(proteinGoal + carbsGoal + fatGoal)
       calories.value = caloriesGoal
      })
   })
