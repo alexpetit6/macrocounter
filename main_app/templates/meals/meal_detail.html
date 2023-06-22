@@ -3,7 +3,11 @@
 {% block content %}
 
 <h1>Meal Detail Page</h1>
-
+<h3>Meals for: {{ meal.date }}</h3>
+<form action="{% url 'meal_detail' %}", method="GET">
+  <input type="date" name="date" value='{{ selected_date }}'>
+  <button type="submit">change date</button>
+</form>
 <h1>Total Calories and Macros</h1>
 <div class="card">
   <div class="card-content">
