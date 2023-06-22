@@ -1,6 +1,8 @@
 from .models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import UpdateView
+from django.forms import ModelForm
 from django import forms
 
 class CustomUserCreationForm(UserCreationForm):

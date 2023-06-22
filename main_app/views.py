@@ -167,3 +167,4 @@ def profile_page(request):
 class UpdateProfile(UpdateView):
   model = Profile
   fields = ['calorie_goal', 'protein_goal', 'carbs_goal', 'fat_goal',]
+
