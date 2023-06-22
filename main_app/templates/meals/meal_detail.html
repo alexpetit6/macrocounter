@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Meal Detail Page</h1>
+
+<h1>Breakfast</h1>
+{% for food in breakfast %}
+<div class="card">
+  <div class="card-content">
+      <span class="card-title">{{ food.name }}</span>
+      <h5>Nutrients:</h5>
+      <h6>Based off {{food.quantity}} grams:</h6>
+      <p>Calories: {{ food.calories }}</p>
+      <p>Protein: {{ food.protein }}</p>
+      <p>Fat: {{ food.fat }}</p>
+      <p>Carb: {{ food.carbs }}</p>
+  </div>
+</div>
+{% endfor %}
+
+<h1>Lunch</h1>
+{% for food in lunch %}
+<div class="card">
+  <div class="card-content">
+      <span class="card-title">{{ food.name }}</span>
+      <h5>Nutrients:</h5>
+      <h6>Based off {{food.quantity}} grams:</h6>
+      <p>Calories: {{ food.calories }}</p>
+      <p>Protein: {{ food.protein }}</p>
+      <p>Fat: {{ food.fat }}</p>
+      <p>Carb: {{ food.carbs }}</p>
+  </div>
+</div>
+{% endfor %}
+
+<h1>Dinner</h1>
+{% for food in dinner %}
+<div class="card">
+  <div class="card-content">
+      <span class="card-title">{{ food.name }}</span>
+      <h5>Nutrients:</h5>
+      <h6>Based off {{food.quantity}} grams:</h6>
+      <p>Calories: {{ food.calories }}</p>
+      <p>Protein: {{ food.protein }}</p>
+      <p>Fat: {{ food.fat }}</p>
+      <p>Carb: {{ food.carbs }}</p>
+  </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}

@@ -29,8 +29,63 @@ class Meal(models.Model):
   def __str__(self):
     return f'{self.date} {self.user}'
   
+  def calculate_nutrients(self):
+    breakfast = []
+    lunch = []
+    dinner = []
+    for item in self.food_items.filter(category='breakfast'):
+      name = item.food.name
+      calories = item.food.calories * (item.quantity / 100)
+      protein = item.food.protein * (item.quantity / 100)
+      carbs = item.food.carbs * (item.quantity / 100)
+      fat = item.food.fat * (item.quantity / 100)
+      breakfast.append(
+        {'name': name,
+         'quantity': item.quantity,
+         'calories': calories, 
+         'protein': protein, 
+         'carbs': carbs, 
+         'fat': fat 
+         }
+      )
+
+    for item in self.food_items.filter(category='lunch'):
+      name = item.food.name
+      calories = item.food.calories * (item.quantity / 100)
+      protein = item.food.protein * (item.quantity / 100)
+      carbs = item.food.carbs * (item.quantity / 100)
+      fat = item.food.fat * (item.quantity / 100)
+      lunch.append(
+        {'name': name,
+         'quantity': item.quantity,
+         'calories': calories, 
+         'protein': protein, 
+         'carbs': carbs, 
+         'fat': fat 
+         }
+      )
+
+    for item in self.food_items.filter(category='dinner'):
+      name = item.food.name
+      calories = item.food.calories * (item.quantity / 100)
+      protein = item.food.protein * (item.quantity / 100)
+      carbs = item.food.carbs * (item.quantity / 100)
+      fat = item.food.fat * (item.quantity / 100)
+      dinner.append(
+        {'name': name,
+         'quantity': item.quantity,
+         'calories': calories, 
+         'protein': protein, 
+         'carbs': carbs, 
+         'fat': fat 
+         }
+      )
+
+    return [breakfast, lunch, dinner]
+    print(self.food_items)
+
 class MealFood(models.Model):
-  meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+  meal = models.ForeignKey(Meal, on_delete=models.CASCADE, related_name='food_items' )
   food = models.ForeignKey(Food, on_delete=models.CASCADE)
   quantity = models.PositiveIntegerField(default=0)
   category = models.CharField(max_length=100)

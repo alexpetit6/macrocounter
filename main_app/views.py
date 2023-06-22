@@ -132,9 +132,34 @@ def assoc_food(request, food_id):
   meal_food.save()
   return redirect('food_details', food.food_id)
 
-# def unassoc_food(request, food_id, meal_id):
-#   meal = Meal.objects.get(id=meal_id)
-#   food = meal.breakfast.get(food_id=food_id)
-#   meal_food = MealFood.objects.get(meal=meal, food=food)
-#   quantity = meal_food.quantity
-#   meal.calories -= food.calories * quantity
+def unassoc_food(request, food_id, meal_id):
+  meal = Meal.objects.get(id=meal_id)
+  food = meal.breakfast.get(food_id=food_id)
+  meal_food = MealFood.objects.get(meal=meal, food=food)
+  quantity = meal_food.quantity
+  meal.calories -= food.calories * quantity
+
+def meal_detail(request):
+  date = request.GET.get('date', '')
+  print(date)
+  try: 
+    meal = Meal.objects.get(date=date, user=request.user)
+
+  except Meal.DoesNotExist:
+    meal = Meal.objects.create(
+    date = date,
+    user = request.user
+  )
+
+  breakfast = meal.calculate_nutrients()[0]
+  lunch = meal.calculate_nutrients()[1]
+  dinner = meal.calculate_nutrients()[2]
+  print('breakfast: ', breakfast, 'lunch: ', lunch, 'dinner: ', dinner, 'line 157')
+
+  for food in meal.food_items.filter(category='lunch'):
+    print(food.food.name)
+
+
+  print(meal.food_items.first().food.name, 'line 154')  
+  print(meal.food_items.filter(category='lunch'))
+  return render(request, 'meals/meal_detail.html', {'breakfast': breakfast, 'lunch': lunch, 'dinner': dinner})
