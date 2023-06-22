@@ -4,6 +4,16 @@
 
 <h1>Meal Detail Page</h1>
 
+<h1>Total Calories and Macros</h1>
+<div class="card">
+  <div class="card-content">
+    <p>Calories: {{ meal.calories }}</p>
+    <p>Protein: {{ meal.protein }}</p>
+    <p>Fat: {{ meal.fat }}</p>
+    <p>Carbs: {{ meal.carbs }}</p>
+  </div>
+</div>
+
 <h1>Breakfast</h1>
 {% for food in breakfast %}
 <div class="card">
@@ -14,7 +24,11 @@
       <p>Calories: {{ food.calories }}</p>
       <p>Protein: {{ food.protein }}</p>
       <p>Fat: {{ food.fat }}</p>
-      <p>Carb: {{ food.carbs }}</p>
+      <p>Carbs: {{ food.carbs }}</p>
+      <form action="{% url 'unassoc_food' meal.id food.id 'breakfast' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Remove Food From Meal</button>
+      </form>
   </div>
 </div>
 {% endfor %}
@@ -29,7 +43,11 @@
       <p>Calories: {{ food.calories }}</p>
       <p>Protein: {{ food.protein }}</p>
       <p>Fat: {{ food.fat }}</p>
-      <p>Carb: {{ food.carbs }}</p>
+      <p>Carbs: {{ food.carbs }}</p>
+      <form action="{% url 'unassoc_food' meal.id food.id 'lunch' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Remove Food From Meal</button>
+      </form>
   </div>
 </div>
 {% endfor %}
@@ -44,7 +62,11 @@
       <p>Calories: {{ food.calories }}</p>
       <p>Protein: {{ food.protein }}</p>
       <p>Fat: {{ food.fat }}</p>
-      <p>Carb: {{ food.carbs }}</p>
+      <p>Carbs: {{ food.carbs }}</p>
+      <form action="{% url 'unassoc_food' meal.id food.id 'dinner' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Remove Food From Meal</button>
+      </form>
   </div>
 </div>
 {% endfor %}

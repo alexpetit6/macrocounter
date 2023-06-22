@@ -35,12 +35,14 @@ class Meal(models.Model):
     dinner = []
     for item in self.food_items.filter(category='breakfast'):
       name = item.food.name
+      id = item.food.id
       calories = item.food.calories * (item.quantity / 100)
       protein = item.food.protein * (item.quantity / 100)
       carbs = item.food.carbs * (item.quantity / 100)
       fat = item.food.fat * (item.quantity / 100)
       breakfast.append(
         {'name': name,
+         'id': id,
          'quantity': item.quantity,
          'calories': calories, 
          'protein': protein, 
@@ -51,12 +53,14 @@ class Meal(models.Model):
 
     for item in self.food_items.filter(category='lunch'):
       name = item.food.name
+      id = item.food.id
       calories = item.food.calories * (item.quantity / 100)
       protein = item.food.protein * (item.quantity / 100)
       carbs = item.food.carbs * (item.quantity / 100)
       fat = item.food.fat * (item.quantity / 100)
       lunch.append(
         {'name': name,
+         'id': id,
          'quantity': item.quantity,
          'calories': calories, 
          'protein': protein, 
@@ -67,12 +71,14 @@ class Meal(models.Model):
 
     for item in self.food_items.filter(category='dinner'):
       name = item.food.name
+      id = item.food.id
       calories = item.food.calories * (item.quantity / 100)
       protein = item.food.protein * (item.quantity / 100)
       carbs = item.food.carbs * (item.quantity / 100)
       fat = item.food.fat * (item.quantity / 100)
       dinner.append(
         {'name': name,
+         'id': id,
          'quantity': item.quantity,
          'calories': calories, 
          'protein': protein, 
