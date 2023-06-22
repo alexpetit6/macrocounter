@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -132,34 +133,37 @@ def assoc_food(request, food_id):
   meal_food.save()
   return redirect('food_details', food.food_id)
 
-def unassoc_food(request, food_id, meal_id):
-  meal = Meal.objects.get(id=meal_id)
-  food = meal.breakfast.get(food_id=food_id)
-  meal_food = MealFood.objects.get(meal=meal, food=food)
+def unassoc_food(request, meal_id, food_id, category):
+  meal = Meal.objects.get(id=meal_id, user=request.user)
+  food = Food.objects.get(id=food_id)
+  meal_food = MealFood.objects.get(meal=meal, food=food, category=category)
   quantity = meal_food.quantity
-  meal.calories -= food.calories * quantity
+  if category == 'breakfast':
+    meal.breakfast.remove(food_id)
+  elif category == 'lunch':
+    meal.lunch.remove(food_id)
+  elif category == 'dinner':
+    meal.dinner.remove(food_id)
+  meal_food.delete()
+  meal.calories -= food.calories * (quantity / 100)
+  meal.carbs -= food.carbs * (quantity / 100)
+  meal.protein -= food.protein * (quantity / 100)
+  meal.fat -= food.fat * (quantity / 100)
+  meal.save()
+  redirect_url = reverse('meal_detail')
+  redirect_url += f"?date={meal.date}"
+  return redirect(redirect_url)
 
 def meal_detail(request):
   date = request.GET.get('date', '')
-  print(date)
   try: 
     meal = Meal.objects.get(date=date, user=request.user)
-
   except Meal.DoesNotExist:
     meal = Meal.objects.create(
-    date = date,
-    user = request.user
-  )
-
+      date = date,
+      user = request.user
+    )
   breakfast = meal.calculate_nutrients()[0]
   lunch = meal.calculate_nutrients()[1]
   dinner = meal.calculate_nutrients()[2]
-  print('breakfast: ', breakfast, 'lunch: ', lunch, 'dinner: ', dinner, 'line 157')
-
-  for food in meal.food_items.filter(category='lunch'):
-    print(food.food.name)
-
-
-  print(meal.food_items.first().food.name, 'line 154')  
-  print(meal.food_items.filter(category='lunch'))
-  return render(request, 'meals/meal_detail.html', {'breakfast': breakfast, 'lunch': lunch, 'dinner': dinner})
+  return render(request, 'meals/meal_detail.html', {'breakfast': breakfast, 'lunch': lunch, 'dinner': dinner, 'meal':meal})

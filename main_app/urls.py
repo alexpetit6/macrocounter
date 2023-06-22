@@ -8,5 +8,5 @@ urlpatterns = [
   path('foods/food_details/<str:food_id>/', views.food_details, name='food_details'),
   path('foods/<int:food_id>/assoc_food/', views.assoc_food, name='assoc_food'),
   path('meals/', views.meal_detail, name='meal_detail'),
-  path('foods/<int:food_id>/unassoc_food/', views.unassoc_food, name='unassoc_food'),
+  path('meals/<int:meal_id>/unassoc_food/<int:food_id>/<str:category>', views.unassoc_food, name='unassoc_food'),
 ]
