@@ -12,6 +12,9 @@
     <p>Protein: {{ profile.protein_goal }}</p>
     <p>Carbs: {{ profile.carbs_goal }}</p>
     <p>Fat: {{ profile.fat_goal }}</p>
+    <form action="{% url 'update_profile' profile.id %}" method="GET">
+      <button type="submit" class="btn">Edit Daily Goals</button>
+    </form>
   </div>
 </div>
 

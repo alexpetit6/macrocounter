@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your models here.
 
 class Profile(models.Model):
@@ -9,6 +10,9 @@ class Profile(models.Model):
   protein_goal = models.IntegerField(default=0)
   carbs_goal = models.IntegerField(default=0)
   fat_goal = models.IntegerField(default=0)
+
+  def get_absolute_url(self):
+    return reverse('profile_page')
 
 class Food(models.Model):
   name = models.CharField(max_length=100)

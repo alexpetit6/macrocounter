@@ -162,3 +162,6 @@ def profile_page(request):
   profile = Profile.objects.get(user=user)
   return render(request, 'profiles/profile_page.html', {'user': user, 'profile': profile})
   
+class UpdateProfile(UpdateView):
+  model = Profile
+  fields = ['calorie_goal', 'protein_goal', 'carbs_goal', 'fat_goal',]
