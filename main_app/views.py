@@ -8,7 +8,7 @@ from django.views.generic import ListView, DetailView
 from .models import Food, Meal, MealFood, Profile
 import requests 
 import os
-from datetime import date
+from datetime import date, datetime, timedelta
 from .forms import CustomUserCreationForm
 
 
@@ -146,6 +146,10 @@ def unassoc_food(request, meal_id, food_id, category):
 
 def meal_detail(request):
   selected_date = request.GET.get('date', '')
+  current_date = datetime.strptime(selected_date, '%Y-%m-%d').date() if selected_date else datetime.now().date
+  previous_date = current_date - timedelta(days=1)
+  next_date = current_date + timedelta(days=1)
+  
   try: 
     meal = Meal.objects.get(date=selected_date, user=request.user)
   except Meal.DoesNotExist:
@@ -157,7 +161,7 @@ def meal_detail(request):
   lunch = meal.calculate_nutrients()[1]
   dinner = meal.calculate_nutrients()[2]
   remaining = meal.calculate_remaining_nutrients()
-  return render(request, 'meals/meal_detail.html', {'breakfast': breakfast, 'lunch': lunch, 'dinner': dinner, 'meal':meal, 'remaining': remaining})
+  return render(request, 'meals/meal_detail.html', {'breakfast': breakfast, 'lunch': lunch, 'dinner': dinner, 'meal':meal, 'remaining': remaining, 'selected_date': current_date, 'previous_date': previous_date, 'next_date': next_date})
 
 def profile_page(request):
   user = request.user

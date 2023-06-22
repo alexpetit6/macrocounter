@@ -3,7 +3,9 @@
 {% block content %}
 
 <h1>Meal Detail Page</h1>
-<h3>Meals for: {{ meal.date }}</h3>
+<h3>Meals for: {{ selected_date|date:"M d, Y" }}</h3>
+<a href="?date={{ previous_date|date:'Y-m-d' }}">previous</a>
+<a href="?date={{ next_date|date:'Y-m-d' }}">next</a>
 <form action="{% url 'meal_detail' %}", method="GET">
   <input type="date" name="date" value='{{ selected_date }}'>
   <button type="submit">change date</button>
