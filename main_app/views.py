@@ -14,7 +14,7 @@ from .forms import CustomUserCreationForm
 
 # Create your views here.
 def home(request):
-  return render(request, 'home.html')
+  return redirect('search_food')
 
 def about(request):
   return render(request, 'about.html') 
