@@ -7,7 +7,7 @@
 <a href="?date={{ next_date|date:'Y-m-d' }}">next</a>
 <form action="{% url 'meal_detail' %}", method="GET">
   <input type="date" name="date" value='{{ selected_date }}'>
-  <button type="submit">change date</button>
+  <button class="btn" type="submit">change date</button>
 </form>
 
 <h5>Calories and Macros Remaining: </h5>
@@ -43,7 +43,7 @@
       <p>Carbs: {{ food.carbs }}</p>
       <form action="{% url 'unassoc_food' meal.id food.id 'breakfast' %}" method="POST">
         {% csrf_token %}
-        <button type="submit">Remove Food From Meal</button>
+        <button class="btn" type="submit">Remove Food From Meal</button>
       </form>
   </div>
 </div>
@@ -62,7 +62,7 @@
       <p>Carbs: {{ food.carbs }}</p>
       <form action="{% url 'unassoc_food' meal.id food.id 'lunch' %}" method="POST">
         {% csrf_token %}
-        <button type="submit">Remove Food From Meal</button>
+        <button class="btn" type="submit">Remove Food From Meal</button>
       </form>
   </div>
 </div>
@@ -81,7 +81,7 @@
       <p>Carbs: {{ food.carbs }}</p>
       <form action="{% url 'unassoc_food' meal.id food.id 'dinner' %}" method="POST">
         {% csrf_token %}
-        <button type="submit">Remove Food From Meal</button>
+        <button class="btn" type="submit">Remove Food From Meal</button>
       </form>
   </div>
 </div>
