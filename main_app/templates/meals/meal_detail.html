@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h3>Meals for: {{ selected_date|date:"M d, Y" }}</h3>
+<h5>Meals for: {{ selected_date|date:"M d, Y" }}</h5>
 <a href="?date={{ previous_date|date:'Y-m-d' }}">previous</a>
 <a href="?date={{ next_date|date:'Y-m-d' }}">next</a>
 <form action="{% url 'meal_detail' %}", method="GET">
@@ -10,7 +10,7 @@
   <button type="submit">change date</button>
 </form>
 
-<h3>Calories and Macros Remaining: </h3>
+<h5>Calories and Macros Remaining: </h5>
 <div class="card">
   <div class="card-content">
     <p>Calories: {{ remaining.calories }}</p>
@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<h3>Total Calories and Macros: </h3>
+<h5>Total Calories and Macros: </h5>
 <div class="card">
   <div class="card-content">
     <p>Calories: {{ meal.calories }}</p>
@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<h3>Breakfast</h3>
+<h5>Breakfast:</h5>
 {% for food in breakfast %}
 <div class="card">
   <div class="card-content">
@@ -49,7 +49,7 @@
 </div>
 {% endfor %}
 
-<h3>Lunch</h3>
+<h5>Lunch:</h5>
 {% for food in lunch %}
 <div class="card">
   <div class="card-content">
@@ -68,7 +68,7 @@
 </div>
 {% endfor %}
 
-<h3>Dinner</h3>
+<h5>Dinner:</h5>
 {% for food in dinner %}
 <div class="card">
   <div class="card-content">
