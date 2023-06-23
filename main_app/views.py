@@ -4,7 +4,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-# from django.db.models import get_or_create
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Food, Meal, MealFood, Profile
 import requests 
 import os
@@ -59,6 +60,7 @@ def search_food(request):
 
     return render(request, 'foods/index.html', context)
 
+@login_required
 def food_details(request, food_id):
   try:
     food = Food.objects.get(food_id=food_id)
@@ -88,6 +90,7 @@ def food_details(request, food_id):
  
   return render(request, 'foods/food_details.html', {'food': food})
 
+@login_required
 def assoc_food(request, food_id):
   category = request.POST.__getitem__('category')
   quantity = int(request.POST.__getitem__('quantity')) 
@@ -126,6 +129,7 @@ def assoc_food(request, food_id):
   meal_food.save()
   return redirect('food_details', food.food_id)
 
+@login_required
 def unassoc_food(request, meal_id, food_id, category):
   meal = Meal.objects.get(id=meal_id, user=request.user)
   food = Food.objects.get(id=food_id)
@@ -147,6 +151,7 @@ def unassoc_food(request, meal_id, food_id, category):
   redirect_url += f"?date={meal.date}"
   return redirect(redirect_url)
 
+@login_required
 def meal_detail(request):
   selected_date = request.GET.get('date', '')
   current_date = datetime.strptime(selected_date, '%Y-%m-%d').date() if selected_date else datetime.now().date
@@ -166,12 +171,13 @@ def meal_detail(request):
   remaining = meal.calculate_remaining_nutrients()
   return render(request, 'meals/meal_detail.html', {'breakfast': breakfast, 'lunch': lunch, 'dinner': dinner, 'meal':meal, 'remaining': remaining, 'selected_date': current_date, 'previous_date': previous_date, 'next_date': next_date})
 
+@login_required
 def profile_page(request):
   user = request.user
   profile = Profile.objects.get(user=user)
   return render(request, 'profiles/profile_page.html', {'user': user, 'profile': profile})
   
-class UpdateProfile(UpdateView):
+class UpdateProfile(LoginRequiredMixin, UpdateView):
   model = Profile
   fields = ['calorie_goal', 'protein_goal', 'carbs_goal', 'fat_goal',]
 
