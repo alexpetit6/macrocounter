@@ -4,8 +4,6 @@
 
 Macro Counter is a web app where you can keep track of your daily calories and macronutrients. It utilizes the Edamam's Food Database API to allow users to search for foods. 
 
-<a href="https://breweries-reviews-project.herokuapp.com/">https://breweries-reviews-project.herokuapp.com/</a>
-
 </div>
 
 # Screenshots
