@@ -4,12 +4,12 @@
 
 <form method="GET" action="{% url 'search_food' %}">
   <input type="text" name="ingr" placeholder="Enter your food">
-  <button type="submit">Search Food</button>
+  <button class='btn' type="submit">Search Food</button>
 </form>
 
 {% if search_results %}
     {% if ingr %}
-      <h3>Search Results For {{ ingr }}: </h3>
+      <h3>Search Results For '{{ ingr }}': </h3>
     {% else %}
       <h3>Results:</h3>
     {% endif %}
@@ -24,7 +24,7 @@
             <p>Fat: {{ result.food.nutrients.FAT | floatformat:0 }}</p>
             <p>Carb: {{ result.food.nutrients.CHOCDF | floatformat:0 }}</p>
             <a href="{% url 'food_details' result.food.foodId %}">
-              <button>Food Details</button>
+              <button class='btn'>Food Details</button>
             </a>
         </div>
       </div>
