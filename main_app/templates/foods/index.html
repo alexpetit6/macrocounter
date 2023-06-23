@@ -8,7 +8,11 @@
 </form>
 
 {% if search_results %}
-    <h2>Search Results For {{ ingr }}: Total {{ search_results.total }}</h2>
+    {% if ingr %}
+      <h3>Search Results For {{ ingr }}: </h3>
+    {% else %}
+      <h3>Results:</h3>
+    {% endif %}
     {% for result in search_results %}
       <div class="card">
         <div class="card-content">
